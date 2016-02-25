@@ -1,0 +1,2 @@
+exportPattern("^[^\\.]")
+import(depmixS4, DESeq2, MASS, miscTools, psych, RColorBrewer, ggplot2)

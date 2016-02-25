@@ -1,0 +1,27 @@
+Package: R.4Cker
+Title: Analysis of 4C-seq (circularized chromosome conformation capture) data
+Version: 0.0.0.9000
+Authors@R: c(person("Ramya", "Raviram", email="ravirr01@nyumc.org", role = c("aut", "cre")),
+  person("Pedro", "Rocha", email="pedro.pereiradarocha@nyumc.org", role = c("aut")),
+  person("Christian","Mueller", email = "cmueller@simonsfoundation.org", role = c("aut")),
+  person("Emily","Miraldi", email = "emiraldi@nyu.edu", role = c("aut")),
+  person("Sana","Badri", email = "sana.badri@nyumc.org", role = c("aut")),
+  person("Yi","Fu", email = "yi.fu@nyumc.org", role = c("aut")),
+  person("Emily","Swanzey", email = "emily.swanzey@nyu", role = c("aut")),
+  person("Charlotte","Proudhon", email = "charlotte.proudhon@nyumc.org", role = c("aut")),
+  person("Valentina","Snetkova", email = "valentina.snetkova@nyumc.org", role = c("aut")),
+  person("Richard","Bonneau", email = "rb133@nyu.edu", role = c("aut")),
+  person("Jane","Skok", email = "jane.skok@nyumc.org", role = c("aut")))
+Description: A method to identify domains interacting with a 4C-Seq bait in cis and trans.
+Depends: R (>= 3.1.2)
+License: What license is it under?
+LazyData: true
+Imports:
+  depmixS4,
+  DESeq2,
+  MASS,
+  miscTools,
+  psych,
+  RColorBrewer,
+  ggplot2
+
