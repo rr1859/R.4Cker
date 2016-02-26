@@ -44,7 +44,29 @@ The SAM output from bowtie2 reads can be used to create a counts file(.bedGraph)
 bash sam_bedGraph.sh input_dir_forSAMfiles/
 ```
 
-**3. Analyzing 4C interactions**
+**3. Removing the self-ligated and undigested fragments**
+
+To remove the self-ligated and undigested fragments, first find the coordinates based on the primer sequence (Watson strand not including the RE sequence)
+```
+grep -B 1 "TTCTATCTGCAGAGAAATATAGCC" mm10_hindiii_flanking_sequences_25_unique_2.fa
+
+>chr1:100025183-100025208
+CTTCTATCTGCAGAGAAATATAGCC
+```
+Then find the sequence before and after the bait fragment
+```
+grep -E -A 1 -B 1 'chr1.100025183.100025208' mm10_hindiii_flanking_sequences_25_unique_2.bed
+
+chr1	100025152	100025177
+chr1	100025183	100025208
+chr1	100038369	100038394
+```
+Remove the fragments matching the coordinates from line 1 and 3 printed above from all .bedGraph file and generate new files with suffix '_rm_self_und.bedGraph'. Remember to do this for each bait.
+```
+for file in bait*bedGraph; do grep -v -E 'chr1.100025152.100025177|chr1.100038369.100038394' $file > $(echo $file | sed 's/.bedGraph/_rm_self_und.bedGraph/g'); done
+```
+
+**4. Analyzing 4C interactions**
 
 As an example, datasets with baits on CD83 (HindIII) and the Tcrb Eb enhancer(NlaIII) will be used to demonstrate the use of 4C-ker. Count files for these datasets can be found in the data folder.
 
