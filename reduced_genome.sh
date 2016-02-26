@@ -32,7 +32,6 @@ fastaFromBed -fi ${genome}.fa -bed ${genome}_${enzyme}_flanking_sites_${fl}_uniq
 grep -v '^>' ${genome}_${enzyme}_flanking_sequences_${fl}_unique_2.fa | sort | uniq -i -u | grep -xF -f - -B 1 ${genome}_${enzyme}_flanking_sequences_${fl}_unique_2.fa | grep -v '^--' > ${genome}_${enzyme}_flanking_sequences_${fl}_unique.fa
 
 #remove unwanted intermediate files
-rm ${genome}_${enzyme}_flanking_sites_${fl}_unique_2.bed
 rm up.txt
 rm down.txt
 

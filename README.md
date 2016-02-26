@@ -46,16 +46,16 @@ bash sam_bedGraph.sh input_dir_forSAMfiles/
 
 **3. Removing the self-ligated and undigested fragments**
 
-To remove the self-ligated and undigested fragments, first find the coordinates based on the primer sequence (Watson strand not including the RE sequence)
+To remove the self-ligated and undigested fragments, first find the coordinates based on the primer sequence (Watson strand regardless of primer strand and not including the RE sequence)
 ```
-grep -B 1 "TTCTATCTGCAGAGAAATATAGCC" mm10_hindiii_flanking_sequences_25_unique_2.fa
+grep -i -B 1 "CTTCTATCTGCAGAGA" mm10_hindiii_flanking_sequences_25_unique_2.fa
 
 >chr1:100025183-100025208
 CTTCTATCTGCAGAGAAATATAGCC
 ```
 Then find the sequence before and after the bait fragment
 ```
-grep -E -A 1 -B 1 'chr1.100025183.100025208' mm10_hindiii_flanking_sequences_25_unique_2.bed
+grep -E -A 1 -B 1 'chr1.100025183.100025208' mm10_hindiii_flanking_sites_25_unique_2.bed
 
 chr1	100025152	100025177
 chr1	100025183	100025208
