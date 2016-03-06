@@ -64,18 +64,23 @@ cisAnalysis <- function(obj, k){
   print(paste("BED file of highest interacting domains for the cis chromosome are saved in ",
               obj@output_dir, sep = ""))
   ####end viterbi####
-  norm_counts_avg=NULL
-  j=1
-  for(i in 1:length(obj@replicates)){
-    reps=obj@replicates[i]
-    norm_counts_avg = rbind(norm_counts_avg, cbind(rowMeans(counts_results$norm_counts[,j:(j+reps-1)]), rep(obj@conditions[i],nrow(window_counts))))
-    j=j+i
+  if(length(obj@samples) >1){
+    norm_counts_avg=NULL
+    j=1
+    for(i in 1:length(obj@replicates)){
+      reps=obj@replicates[i]
+      norm_counts_avg = rbind(norm_counts_avg, cbind(rowMeans(counts_results$norm_counts[,j:(j+reps-1)]), rep(obj@conditions[i],nrow(window_counts))))
+      j=j+i
+    }
+    norm_counts_avg = data.frame(cbind(rowMeans(window_counts[,2:3]),norm_counts_avg))
+    norm_counts_avg[,1] =as.numeric(as.character(norm_counts_avg[,1]))
+    norm_counts_avg[,2] =as.numeric(as.character(norm_counts_avg[,2]))
+    colnames(norm_counts_avg) = c("Coord", "Count", "Condition")
+    return(list(norm_counts_avg=norm_counts_avg, window_counts=counts_results$window_counts))
   }
-  norm_counts_avg = data.frame(cbind(rowMeans(window_counts[,2:3]),norm_counts_avg))
-  norm_counts_avg[,1] =as.numeric(as.character(norm_counts_avg[,1]))
-  norm_counts_avg[,2] =as.numeric(as.character(norm_counts_avg[,2]))
-  colnames(norm_counts_avg) = c("Coord", "Count", "Condition")
-  return(list(norm_counts_avg=norm_counts_avg, window_counts=counts_results$window_counts))
+  else{
+    return(list(norm_counts_avg=counts_results$norm_counts,window_counts=counts_results$window_counts))
+  }
 }
 
 
