@@ -114,7 +114,7 @@ buildAdaptiveWindowsCis <- function(data_all,bait_coord, bait_chr,bait_name, out
   window_counts[,1] <- round(window_counts[,1])
   window_counts[,2] <- round(window_counts[,2])
   num_windows <- nrow(window_counts)
-  write.table(cbind(rep(bait_chr, num_windows), window_counts), paste(output_dir,bait_name,, "_",region,"_adaptive_windows.bed",sep =""), quote = FALSE, row.names = FALSE, col.names = FALSE)
+  write.table(cbind(rep(bait_chr, num_windows), window_counts), paste(output_dir,bait_name, "_",region,"_adaptive_windows.bed",sep =""), quote = FALSE, row.names = FALSE, col.names = FALSE)
   window_counts <- cbind(rep(bait_chr, nrow(window_counts)), window_counts,abs(rowMeans(window_counts[,1:2])-bait_coord))
   window_counts <- data.frame(window_counts, row.names = NULL)
   window_counts[,2] <- as.numeric(as.character(window_counts[,2]))
