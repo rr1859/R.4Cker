@@ -112,10 +112,10 @@ my_obj = createR4CkerObjectFromDFs(dfs = c("Tcrb_Eb_DN_WT_1","Tcrb_Eb_DN_WT_2","
                        output_dir = "~/Documents/Eb_DN_ImmB_results_R4Cker/")
 ```
 
-To use other datasets from the paper you can download the ZIP of R.4Cker from github and use the .bedGraph files in the example_data folder.
+To use other datasets from the paper you can download the ZIP of R.4Cker from github and use the .bedGraph files in the data folder.
 ```
-my_obj = createR4CkerObjectFromFiles(files = c("~/Downloads/R.4Cker-master/example_data/IghCg1_HindIII_1.bedGraph", 
-					"~/Downloads/R.4Cker-master/example_data/IghCg1_HindIII_2.bedGraph"),
+my_obj = createR4CkerObjectFromFiles(files = c("~/Downloads/R.4Cker-master/data/IghCg1_HindIII_1.bedGraph", 
+					"~/Downloads/R.4Cker-master/data/IghCg1_HindIII_2.bedGraph"),
                        bait_chr="chr12",
                        bait_coord= 113321402,
                        bait_name = "Igh",
