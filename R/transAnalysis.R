@@ -7,7 +7,7 @@ ineqfunTrans = function(x, env = globalenv()){
 }
 transAnalysis <- function(obj, k){
   #lower and upper quantiles to separate the three HMM states
-  lower <- 0.6
+  lower <- 0.5
   upper <- 0.8
   region = "trans"
   ############
@@ -22,8 +22,8 @@ transAnalysis <- function(obj, k){
   pars_valid <- FALSE
   ##while loop to change the quantile separation if the parameter estimation fails
   while(!pars_valid & lower > 0.1){
-    starting_values <- startingValuesTrans(synth_counts_results$synth_hmm_input, lower, upper)
-    par_est_results = parameterEstimationTrans(synth_counts_results$synth_hmm_input,obj@replicates,starting_values$trstart,starting_values$respstart, starting_values$instart, ineqfunTrans)
+    starting_values <- startingValuesTrans(synth_counts_results$hmm_input, lower, upper)
+    par_est_results = parameterEstimationTrans(synth_counts_results$hmm_input,obj@replicates,starting_values$trstart,starting_values$respstart, starting_values$instart, ineqfunTrans)
     if(all(par_est_results$pars[4:12] == starting_values$trstart)){
       lower = lower-0.05
       upper = upper-0.05
