@@ -8,8 +8,6 @@ trimOtherStates <- function(hi, li, ni, window_counts){
   for(i in hi){
     if((i-1) %in% left_conflict & !(i+1) %in% right_conflict)
       output <- rbind(output, data.frame(chr = window_counts[(i+1),1],start = window_counts[(i+1),2], end= window_counts[i,3]))
-    if(!(i-1) %in% left_conflict & (i+1) %in% right_conflict)
-      output <- rbind(output, data.frame(chr = window_counts[(i-1),1], start = window_counts[(i-1),2], end=window_counts[i,3]))
     if(!(i-1) %in% left_conflict & !(i+1) %in% right_conflict)
       output <- rbind(output, data.frame(chr = window_counts[i,1], start = window_counts[i,2], end = window_counts[i,3]))
   }
