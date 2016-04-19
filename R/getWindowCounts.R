@@ -6,10 +6,16 @@ getWindowCounts <- function(data,window_counts,num_windows,samples,output_dir, r
   }
   if(region == "trans"){
     colnames(window_counts) <- c("chr", "start", "end", sapply(4:ncol(window_counts), function(i) paste("sample",(i-3), sep = "_")))
-    print("Normalizing counts...")
-    norm_counts <- normalizeCounts(window_counts[,-c(1:3)])
+    if(length(samples) > 1){
+      print("Normalizing counts...")
+      norm_counts <- normalizeCounts(window_counts[,-c(1:3)])
+    }
+    else{
+      norm_counts <- data.frame(counts=window_counts[,4])
+    }
     norm_counts_log <- log(norm_counts+1,10)
     write.table(cbind(window_counts, norm_counts), paste(output_dir, "_", region, "_norm_counts.txt", sep = ""), quote = FALSE, row.names = FALSE)
+      
     for(i in 1:length(samples)){
       write.table(cbind(window_counts,norm_counts[,i]),
                   paste(output_dir,samples[i], "_",region,"_norm_counts.bedGraph", sep = ""),
