@@ -71,7 +71,12 @@ nearBaitAnalysis <- function(obj, k){
     j=1
     for(i in 1:length(obj@replicates)){
       reps=obj@replicates[i]
-      norm_counts_avg = rbind(norm_counts_avg, cbind(rowMeans(counts_results$norm_counts[,j:(j+reps-1)]), rep(obj@conditions[i],nrow(window_counts))))
+      if(reps == 1){
+        norm_counts_avg = rbind(norm_counts_avg, cbind(counts_results$norm_counts[,j], rep(obj@conditions[i],nrow(window_counts))))
+      }
+      else{
+        norm_counts_avg = rbind(norm_counts_avg, cbind(rowMeans(counts_results$norm_counts[,j:(j+reps-1)]), rep(obj@conditions[i],nrow(window_counts))))
+      }
       j=j+i
     }
     norm_counts_avg = data.frame(cbind(rowMeans(window_counts[,2:3]),norm_counts_avg))
