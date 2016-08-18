@@ -25,7 +25,7 @@ awk -v fl=$fl '{print $1"\t"$3"\t"$3+fl}' ${genome}_${enzyme}_restriction_sites_
 #combine up and downstream fragments
 cat up.txt down.txt > ${genome}_${enzyme}_flanking_sites_${fl}_2.bed
 #remove any fragments with negative coordinates
-awk '{if($2 >= 0 && $3 >=0) print $0}' ${genome}_${enzyme}_flanking_sites_${fl}_2.bed | grep -v -E 'random|JH|GL' - | sort | uniq  > ${genome}_${enzyme}_flanking_sites_${fl}_unique_2.bed
+awk '{if($2 >= 0 && $3 >=0) print $0}' ${genome}_${enzyme}_flanking_sites_${fl}_2.bed | grep -v -E 'random|JH|GL' - | sort -k1,1 -k2,2n | uniq  > ${genome}_${enzyme}_flanking_sites_${fl}_unique_2.bed
 #get the sequence of unique flanking coordinates
 fastaFromBed -fi ${genome}.fa -bed ${genome}_${enzyme}_flanking_sites_${fl}_unique_2.bed -fo ${genome}_${enzyme}_flanking_sequences_${fl}_unique_2.fa
 #get only sequences from FASTA file
