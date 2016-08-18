@@ -75,7 +75,7 @@ cisAnalysis <- function(obj, k){
       else{
         norm_counts_avg = rbind(norm_counts_avg, cbind(rowMeans(counts_results$norm_counts[,j:(j+reps-1)]), rep(obj@conditions[i],nrow(window_counts))))
       }
-      j=j+i
+      j=j+reps
     }
     norm_counts_avg = data.frame(cbind(rowMeans(window_counts[,2:3]),norm_counts_avg))
     norm_counts_avg[,1] =as.numeric(as.character(norm_counts_avg[,1]))
