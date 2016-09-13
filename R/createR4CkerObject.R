@@ -104,8 +104,9 @@ createR4CkerObjectFromFiles <- function(files,bait_chr,bait_coord,bait_name,prim
   
   chrs_trans = unique(chrs_trans)
   rownames(stats) <- c("Total_number_of_reads","Total_number_of_observed_fragments",
-                       "Reads_in_cis","Percentage_of_reads_in_cis", "Percentage of sites nearbait",
+                       "Reads_in_cis","Percentage_of_reads_in_cis", 
                        "Observed_fragments_in_cis","Percentage_of_observed_fragments_in_cis",
+                       "Percentage of sites nearbait",
                        "Reads_in_trans","Percentage_of_reads_in_trans",
                        "Observed_fragments_in_trans","Percentage_of_observed_fragments_in_trans")
   colnames(stats) <- sub(".bedGraph", "",files)
@@ -186,8 +187,9 @@ createR4CkerObjectFromDFs <- function(dfs,bait_chr,bait_coord,bait_name,primary_
   }
   chrs_trans = unique(chrs_trans)
   rownames(stats) <- c("Total_number_of_reads","Total_number_of_observed_fragments",
-                       "Reads_in_cis","Percentage_of_reads_in_cis", "Percentage_of_observed_fragments_in_cis",
+                       "Reads_in_cis","Percentage_of_reads_in_cis", 
                        "Observed_fragments_in_cis","Percentage_of_observed_fragments_in_cis",
+                       "Percentage_of_observed_fragments_in_cis",
                        "Reads_in_trans","Percentage_of_reads_in_trans",
                        "Observed_fragments_in_trans","Percentage_of_observed_fragments_in_trans")
   colnames(stats) <- sub(".bedGraph", "",dfs)
