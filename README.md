@@ -70,7 +70,7 @@ for file in bait*bedGraph; do grep -v -E 'chr1.100025152.100025177|chr1.10003836
 
 As an example, datasets with baits on CD83 (HindIII) and the Tcrb Eb enhancer(NlaIII) will be used to demonstrate the use of 4C-ker. Count files for these datasets can be found in the data folder.
 
-Creating a 4C-ker object: A 4C-ker object can be created using exiting data frames loaded in R (<i>create4CkerObjectFromDFs</i>) or by specifying the path to the .bedGraph files (<i>createR4CkerObjectFromFiles</i>). The function <i>create4CkerObjectFromDFs</i> can be used with the example datasets provided. The arguments for the function are as follows:<br>
+Creating a 4C-ker object: A 4C-ker object can be created using exiting data frames loaded in R (<i>create4CkerObjectFromDFs</i>) or by specifying the path to the .bedGraph files (<i>createR4CkerObjectFromFiles</i>). It will also check if the samples pass QC criteria and generate a stats file. To pass QC samples must have > than 1 million reads, > than 40% of reads on the cis chromosome and > 40% coverage in the 200kb region around the bait for 4bp cutter and 2MB for 6bp cutters. The function <i>create4CkerObjectFromDFs</i> can be used with the example datasets provided. The arguments for the function are as follows:<br>
 
 <i>files/dfs</i>: path to files or character string of the names of the data.frame variables<br>
 <i>bait_chr</i>: chromosome name of bait location<br>
@@ -80,10 +80,18 @@ Creating a 4C-ker object: A 4C-ker object can be created using exiting data fram
 <i>conditions</i>: names of conditions being analyzed (min of 1)<br>
 <i>replicates</i>: number of replicates for each condition<br>
 <i>species</i>: code for species (Mouse=mm, Human=hs)<br>
-<i>output_dir</i>: path to directory where all output files will be saved
+<i>output_dir</i>: path to directory where all output files will be saved<br>
+<i>enz_file</i>: data.frame containing RE fragments
+
+For the RE fragments you can use the file generated from the reduced_genome script
+```
+
+enz_file=read.table("mm10_hindiii_flanking_sites_25_unique_2.bed", stringsAsFactors = FALSE)
+```
 
 For example to analyze interactions for 1 condition with 2 replicates using the example data (CD83_HindIII):
 ```
+
 data(CD83_HindIII)
 my_obj = createR4CkerObjectFromDFs(dfs = c("CD83_HindIII_1", "CD83_HindIII_2"),
                        bait_chr="chr13",
@@ -94,11 +102,13 @@ my_obj = createR4CkerObjectFromDFs(dfs = c("CD83_HindIII_1", "CD83_HindIII_2"),
                        conditions = "CD83",
                        replicates = 2,
                        species = "mm",
-                       output_dir = "~/Documents/CD83_results_R4Cker/")
+                       output_dir = "~/Documents/CD83_results_R4Cker/",
+		       enz_file=enz_file)
 ```
 
 To analyze multiple conditions with the same bait:
 ```
+enz_file=read.table("mm10_nlaiii_flanking_sites_25_unique_2.bed", stringsAsFactors = FALSE)
 data(Tcrb_Eb_DN_ImmB_WT)
 my_obj = createR4CkerObjectFromDFs(dfs = c("Tcrb_Eb_DN_WT_1","Tcrb_Eb_DN_WT_2","Tcrb_Eb_ImmB_WT_1","Tcrb_Eb_ImmB_WT_2"),
                        bait_chr="chr6",
@@ -109,11 +119,13 @@ my_obj = createR4CkerObjectFromDFs(dfs = c("Tcrb_Eb_DN_WT_1","Tcrb_Eb_DN_WT_2","
                        conditions = c("DN", "ImmB"),
                        replicates = c(2,2),
                        species = "mm",
-                       output_dir = "~/Documents/Eb_DN_ImmB_results_R4Cker/")
+                       output_dir = "~/Documents/Eb_DN_ImmB_results_R4Cker/",
+		       enz_file=enz_file)
 ```
 
 To use other datasets from the paper you can download the ZIP of R.4Cker from github and use the .bedGraph files in the data folder.
 ```
+enz_file=read.table("mm10_hindiii_flanking_sites_25_unique_2.bed", stringsAsFactors = FALSE)
 my_obj = createR4CkerObjectFromFiles(files = c("~/Downloads/R.4Cker-master/data/IghCg1_HindIII_1.bedGraph", 
 					"~/Downloads/R.4Cker-master/data/IghCg1_HindIII_2.bedGraph"),
                        bait_chr="chr12",
@@ -124,7 +136,8 @@ my_obj = createR4CkerObjectFromFiles(files = c("~/Downloads/R.4Cker-master/data/
                        conditions = "Igh",
                        replicates = 2,
                        species = "mm",
-                       output_dir = "~/Documents/Igh_results_R4Cker/")
+                       output_dir = "~/Documents/Igh_results_R4Cker/",
+		       enz_file=enz_file)
 ```
 
 Once my_obj has been created, the following functions can be called to define domains of interaction with the bait: <i>nearBaitAnalysis</i>, <i>cisAnalysis</i>, <i>transAnalysis</i>. Each of these functions takes as arguments, my_obj and the value of 'k' to determine the size of the adaptive windows. The BED files with the resulting domains of interaction files (*_highinter.bed) will be saved in the output directory. There will be one file for each replicate and one that contains domains called by all replicates. In addition, a normalized counts file will be created for the adaptive windows and can be viewed on IGV genome browser.

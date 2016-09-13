@@ -70,6 +70,10 @@ viterbi3State <- function(hmm_input,mod, samples, window_counts, num_windows, ba
     }
     write.table(merge_windows(trim_sample),paste(output_dir,samples[rep], "_", region, "_highinter.bed", sep =""),
                 quote = FALSE, row.names = FALSE, col.names = FALSE, sep = "\t")
+    write.table(merge_windows(window_counts[sample_liint,1:3]),paste(output_dir,samples[rep], "_", region, "_lowinter.bed", sep =""),
+                quote = FALSE, row.names = FALSE, col.names = FALSE, sep = "\t")
+    write.table(merge_windows(window_counts[sample_niint,1:3]),paste(output_dir,samples[rep], "_", region, "_noninter.bed", sep =""),
+                quote = FALSE, row.names = FALSE, col.names = FALSE, sep = "\t")
     row <- row+num_windows
   }
 
