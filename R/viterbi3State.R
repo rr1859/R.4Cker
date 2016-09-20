@@ -110,7 +110,7 @@ viterbi3State <- function(hmm_input,mod, samples, window_counts, num_windows, ba
     rows = which(window_counts[,1] == as.character(chr))
     if(length(rows) > 0){
       intersect_chr = intersect[which(intersect >= min(rows) & intersect <= max(rows))]
-      union_liint_chr = union_liint[which(union_liint >= min(rows) & union_liint <= max(rows))]
+      union_hiint_chr = union_hiint[which(union_hiint >= min(rows) & union_hiint <= max(rows))]
       union_niint_chr = union_niint[which(union_niint >= min(rows) & union_niint <= max(rows))]
       intersect_trim = trimOtherStates(intersect_chr, union_hiint_chr, union_niint_chr,window_counts)
       final_intersect_trim_li = rbind(final_intersect_trim_li, intersect_trim)
@@ -129,8 +129,8 @@ viterbi3State <- function(hmm_input,mod, samples, window_counts, num_windows, ba
     rows = which(window_counts[,1] == as.character(chr))
     if(length(rows) > 0){
       intersect_chr = intersect[which(intersect >= min(rows) & intersect <= max(rows))]
+      union_hiint_chr = union_hiint[which(union_hiint >= min(rows) & union_hiint <= max(rows))]
       union_liint_chr = union_liint[which(union_liint >= min(rows) & union_liint <= max(rows))]
-      union_niint_chr = union_niint[which(union_niint >= min(rows) & union_niint <= max(rows))]
       intersect_trim = trimOtherStates(intersect_chr, union_hiint_chr, union_liint_chr,window_counts)
       final_intersect_trim_ni = rbind(final_intersect_trim_ni, intersect_trim)
     }
