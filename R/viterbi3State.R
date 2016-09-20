@@ -70,10 +70,15 @@ viterbi3State <- function(hmm_input,mod, samples, window_counts, num_windows, ba
     }
     write.table(merge_windows(trim_sample),paste(output_dir,samples[rep], "_", region, "_highinter.bed", sep =""),
                 quote = FALSE, row.names = FALSE, col.names = FALSE, sep = "\t")
-    write.table(merge_windows(window_counts[sample_liint,1:3]),paste(output_dir,samples[rep], "_", region, "_lowinter.bed", sep =""),
-                quote = FALSE, row.names = FALSE, col.names = FALSE, sep = "\t")
-    write.table(merge_windows(window_counts[sample_niint,1:3]),paste(output_dir,samples[rep], "_", region, "_noninter.bed", sep =""),
-                quote = FALSE, row.names = FALSE, col.names = FALSE, sep = "\t")
+    if(length(sample_liint) > 0){
+      write.table(merge_windows(window_counts[sample_liint,1:3]),paste(output_dir,samples[rep], "_", region, "_lowinter.bed", sep =""),
+                  quote = FALSE, row.names = FALSE, col.names = FALSE, sep = "\t")
+    }
+    if(length(sample_niint) >0){
+      write.table(merge_windows(window_counts[sample_niint,1:3]),paste(output_dir,samples[rep], "_", region, "_noninter.bed", sep =""),
+                  quote = FALSE, row.names = FALSE, col.names = FALSE, sep = "\t")
+    }
+
     row <- row+num_windows
   }
 
@@ -120,23 +125,28 @@ viterbi3State <- function(hmm_input,mod, samples, window_counts, num_windows, ba
               quote = FALSE, row.names = FALSE, col.names = FALSE)
   
   #non-int overlap between replicates
-  table_intersect <- data.frame(table(sample_niint_all))
-  intersect <- table_intersect[table_intersect[,2] == reps,1]
-  intersect <- as.numeric(as.character(intersect))
-  intersect <- intersect[order(intersect)]
-  final_intersect_trim_ni = NULL
-  for(chr in chrs){
-    rows = which(window_counts[,1] == as.character(chr))
-    if(length(rows) > 0){
-      intersect_chr = intersect[which(intersect >= min(rows) & intersect <= max(rows))]
-      union_hiint_chr = union_hiint[which(union_hiint >= min(rows) & union_hiint <= max(rows))]
-      union_liint_chr = union_liint[which(union_liint >= min(rows) & union_liint <= max(rows))]
-      intersect_trim = trimOtherStates(intersect_chr, union_hiint_chr, union_liint_chr,window_counts)
-      final_intersect_trim_ni = rbind(final_intersect_trim_ni, intersect_trim)
+  if(length(sample_niint_all) > 0){
+    table_intersect <- data.frame(table(sample_niint_all))
+    intersect <- table_intersect[table_intersect[,2] == reps,1]
+    if(length(intersect) >0){
+      intersect <- as.numeric(as.character(intersect))
+      intersect <- intersect[order(intersect)]
+      final_intersect_trim_ni = NULL
+      for(chr in chrs){
+        rows = which(window_counts[,1] == as.character(chr))
+        if(length(rows) > 0){
+          intersect_chr = intersect[which(intersect >= min(rows) & intersect <= max(rows))]
+          union_hiint_chr = union_hiint[which(union_hiint >= min(rows) & union_hiint <= max(rows))]
+          union_liint_chr = union_liint[which(union_liint >= min(rows) & union_liint <= max(rows))]
+          intersect_trim = trimOtherStates(intersect_chr, union_hiint_chr, union_liint_chr,window_counts)
+          final_intersect_trim_ni = rbind(final_intersect_trim_ni, intersect_trim)
+          print(nrow(final_intersect_trim_ni))
+        }
+      }
+      write.table(merge_windows(final_intersect_trim_ni),paste(output_dir,bait_name, "_", region, "_noninter.bed", sep =""),
+                  quote = FALSE, row.names = FALSE, col.names = FALSE)
     }
   }
-  write.table(merge_windows(final_intersect_trim_ni),paste(output_dir,bait_name, "_", region, "_noninter.bed", sep =""),
-              quote = FALSE, row.names = FALSE, col.names = FALSE)
 }
 
 
