@@ -139,10 +139,14 @@ createR4CkerObjectFromDFs <- function(dfs,bait_chr,bait_coord,bait_name,primary_
   data_nearbait <- vector("list",sum(replicates))
   data_trans <- vector("list",sum(replicates))
   chrs_trans <- NULL
-  if(nchar(primary_enz) == 4)
+  if(nchar(primary_enz) == 4){
     nearbait_size = 1e6
-  else
+    frag_window=1e5
+  }
+  else{
     nearbait_size = 5e6
+    frag_window=1e6
+  }
   stats <- NULL
   for(i in 1:length(dfs)){
     data <- get(dfs[i])
