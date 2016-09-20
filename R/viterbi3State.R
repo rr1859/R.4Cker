@@ -140,11 +140,13 @@ viterbi3State <- function(hmm_input,mod, samples, window_counts, num_windows, ba
           union_liint_chr = union_liint[which(union_liint >= min(rows) & union_liint <= max(rows))]
           intersect_trim = trimOtherStates(intersect_chr, union_hiint_chr, union_liint_chr,window_counts)
           final_intersect_trim_ni = rbind(final_intersect_trim_ni, intersect_trim)
-          print(nrow(final_intersect_trim_ni))
         }
       }
-      write.table(merge_windows(final_intersect_trim_ni),paste(output_dir,bait_name, "_", region, "_noninter.bed", sep =""),
-                  quote = FALSE, row.names = FALSE, col.names = FALSE)
+      if(nrow(final_intersect_trim_ni) > 0){
+        write.table(merge_windows(final_intersect_trim_ni),paste(output_dir,bait_name, "_", region, "_noninter.bed", sep =""),
+                    quote = FALSE, row.names = FALSE, col.names = FALSE)
+      }
+
     }
   }
 }
