@@ -1,12 +1,13 @@
 trimOtherStates <- function(hi, li, ni, window_counts){
   other_states <- c(li, ni)
+  max_row=max(hi,li,ni)
   left <- hi-1
   right <- hi+1
   left_conflict <- left[which(left %in% other_states)]
   right_conflict <- right[which(right %in% other_states)]
   output <- NULL
   for(i in hi){
-    if((i-1) %in% left_conflict & !(i+1) %in% right_conflict)
+    if((i-1) %in% left_conflict & !(i+1) %in% right_conflict & (i+1) <= max_row)
       output <- rbind(output, data.frame(chr = window_counts[(i+1),1],start = window_counts[(i+1),2], end= window_counts[i,3]))
     if(!(i-1) %in% left_conflict & !(i+1) %in% right_conflict)
       output <- rbind(output, data.frame(chr = window_counts[i,1], start = window_counts[i,2], end = window_counts[i,3]))
@@ -146,7 +147,6 @@ viterbi3State <- function(hmm_input,mod, samples, window_counts, num_windows, ba
         write.table(merge_windows(final_intersect_trim_ni),paste(output_dir,bait_name, "_", region, "_noninter.bed", sep =""),
                     quote = FALSE, row.names = FALSE, col.names = FALSE)
       }
-
     }
   }
 }
