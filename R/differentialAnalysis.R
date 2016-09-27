@@ -15,8 +15,6 @@ differentialAnalysis <- function(obj,norm_counts_avg, windows,conditions, region
   windows_domains_all = unique(windows_domains_all)
   if(!is.null(coordinates)){
     windows_domains_all=windows_domains_all[which(windows_domains_all[,2] >= coordinates[1] & windows_domains_all[,2] <= coordinates[2]),]
-    norm_counts_avg=norm_counts_avg[which(windows[,2] >= coordinates[1] & windows[,2] <= coordinates[2]),]
-    windows=windows[which(windows[,2] >= coordinates[1] & windows[,2] <= coordinates[2]),]
   }
   window_counts = data.frame(windows_domains_all[,-c(1:4)])
   
@@ -79,12 +77,11 @@ differentialAnalysis <- function(obj,norm_counts_avg, windows,conditions, region
                       windows_domains_all[which(res$padj < pval), 2], 
                       windows_domains_all[which(res$padj < pval), 3], sep = "_")
     sig_windows_rows=rep("not_sig", nrow(windows))
-    sig_windows_rows=rep("not_sig", nrow(windows))
     sig_windows_rows[which(paste(windows[,1], windows[,2], windows[,3], sep = "_") %in% sig_windows)] = "sig"
     plot_df = cbind(norm_counts_avg,sig=c(sig_windows_rows, sig_windows_rows))
-    
+    plot_df_coord = plot_df[which(plot_df[,1] >= coordinates[1] & plot_df[,1] <= coordinates[2]),]
     quartz()
-    print(ggplot(plot_df, aes(x=coord, y=counts, colour=conditions))+
+    print(ggplot(plot_df_coord, aes(x=coord, y=counts, colour=conditions))+
       geom_line()+theme_bw()+
       xlab(paste("Chromosome coordinates (", obj@bait_chr, ")", sep =""))+
       ylab("Normalized counts")+geom_point(data=subset(plot_df,sig=="not_sig"), shape=1, size=0.5)+
