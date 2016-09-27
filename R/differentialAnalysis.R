@@ -84,8 +84,8 @@ differentialAnalysis <- function(obj,norm_counts_avg, windows,conditions, region
     print(ggplot(plot_df_coord, aes(x=Coord, y=Count, colour=Condition))+
       geom_line()+theme_bw()+
       xlab(paste("Chromosome coordinates (", obj@bait_chr, ")", sep =""))+
-      ylab("Normalized counts")+geom_point(data=subset(plot_df,sig=="not_sig"), shape=1, size=0.5)+
-      geom_point(data=subset(plot_df,sig=="sig")))
+      ylab("Normalized counts")+geom_point(data=subset(plot_df_coord,sig=="not_sig"), shape=1, size=0.5)+
+      geom_point(data=subset(plot_df_coord,sig=="sig")))
   }
   sig_merge_windows=merge_windows(windows_domains_all[which(res$padj < pval), 1:3])
   print(paste("BED file of significant domains saved in ", obj@output_dir, sep = ""))
