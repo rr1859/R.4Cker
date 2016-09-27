@@ -81,7 +81,7 @@ differentialAnalysis <- function(obj,norm_counts_avg, windows,conditions, region
     plot_df = cbind(norm_counts_avg,sig=c(sig_windows_rows, sig_windows_rows))
     plot_df_coord = plot_df[which(plot_df[,1] >= coordinates[1] & plot_df[,1] <= coordinates[2]),]
     quartz()
-    print(ggplot(plot_df_coord, aes(x=coord, y=counts, colour=conditions))+
+    print(ggplot(plot_df_coord, aes(x=Coord, y=Count, colour=Condition))+
       geom_line()+theme_bw()+
       xlab(paste("Chromosome coordinates (", obj@bait_chr, ")", sep =""))+
       ylab("Normalized counts")+geom_point(data=subset(plot_df,sig=="not_sig"), shape=1, size=0.5)+
