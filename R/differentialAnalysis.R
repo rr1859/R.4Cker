@@ -1,4 +1,4 @@
-differentialAnalysis <- function(obj,norm_counts_avg, windows,conditions, region,coordinates=NULL, pval){
+differentialAnalysis <- function(obj,norm_counts_avg, windows,conditions, region,coordinates, pval){
   pval_options=c(0.01, 0.05,0.1)
   if(length(conditions) != 2)
     stop("Only 2 conditions can be analyzed")
@@ -13,8 +13,8 @@ differentialAnalysis <- function(obj,norm_counts_avg, windows,conditions, region
     windows_domains_all = rbind(windows_domains_all, windows_domain)
   }
   windows_domains_all = unique(windows_domains_all)
-  if(length(coordinates) > 0){
-    windows_domains_all=windows_domains_all[windows_domains_all[,2] > coordinates[1] & windows_domains_all[,2] < coordinates[2],]
+  if(!is.null(coordinates)){
+    windows_domains_all=windows_domains_all[which(windows_domains_all[,2] > coordinates[1] & windows_domains_all[,2] < coordinates[2]),]
   }
   window_counts = data.frame(windows_domains_all[,-c(1:4)])
   
