@@ -14,7 +14,9 @@ differentialAnalysis <- function(obj,norm_counts_avg, windows,conditions, region
   }
   windows_domains_all = unique(windows_domains_all)
   if(!is.null(coordinates)){
-    windows_domains_all=windows_domains_all[which(windows_domains_all[,2] > coordinates[1] & windows_domains_all[,2] < coordinates[2]),]
+    windows_domains_all=windows_domains_all[which(windows_domains_all[,2] >= coordinates[1] & windows_domains_all[,2] <= coordinates[2]),]
+    norm_counts_avg=norm_counts_avg[which(windows_domains_all[,2] >= coordinates[1] & windows_domains_all[,2] <= coordinates[2]),]
+    windows=windows[which(windows_domains_all[,2] >= coordinates[1] & windows_domains_all[,2] <= coordinates[2]),]
   }
   window_counts = data.frame(windows_domains_all[,-c(1:4)])
   
@@ -76,7 +78,7 @@ differentialAnalysis <- function(obj,norm_counts_avg, windows,conditions, region
     sig_windows=paste(windows_domains_all[which(res$padj < pval), 1], 
                       windows_domains_all[which(res$padj < pval), 2], 
                       windows_domains_all[which(res$padj < pval), 3], sep = "_")
-    sig_windows_rows=rep("not_sig", nrow(windows))
+    sig_windows_rows=rep("not_sig", nrow(windows\))
     sig_windows_rows[which(paste(windows[,1], windows[,2], windows[,3], sep = "_") %in% sig_windows)] = "sig"
     plot_df = cbind(norm_counts_avg,sig=c(sig_windows_rows, sig_windows_rows))
     plot_df_log= plot_df
