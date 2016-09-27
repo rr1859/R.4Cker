@@ -78,7 +78,7 @@ differentialAnalysis <- function(obj,norm_counts_avg, windows,conditions, region
     sig_windows=paste(windows_domains_all[which(res$padj < pval), 1], 
                       windows_domains_all[which(res$padj < pval), 2], 
                       windows_domains_all[which(res$padj < pval), 3], sep = "_")
-    sig_windows_rows=rep("not_sig", nrow(windows\))
+    sig_windows_rows=rep("not_sig", nrow(windows))
     sig_windows_rows[which(paste(windows[,1], windows[,2], windows[,3], sep = "_") %in% sig_windows)] = "sig"
     plot_df = cbind(norm_counts_avg,sig=c(sig_windows_rows, sig_windows_rows))
     plot_df_log= plot_df
