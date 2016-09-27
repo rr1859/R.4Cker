@@ -16,7 +16,6 @@ differentialAnalysis <- function(obj,norm_counts_avg, windows,conditions, region
   if(!is.null(coordinates)){
     windows_domains_all=windows_domains_all[which(windows_domains_all[,2] >= coordinates[1] & windows_domains_all[,2] <= coordinates[2]),]
     norm_counts_avg=norm_counts_avg[which(windows_domains_all[,2] >= coordinates[1] & windows_domains_all[,2] <= coordinates[2]),]
-    windows=windows[which(windows_domains_all[,2] >= coordinates[1] & windows_domains_all[,2] <= coordinates[2]),]
   }
   window_counts = data.frame(windows_domains_all[,-c(1:4)])
   
@@ -74,29 +73,19 @@ differentialAnalysis <- function(obj,norm_counts_avg, windows,conditions, region
       geom_point(data=subset(plot_df,sig=="sig"))
   }
   if(region == "nearbait"){
-    sig_rows = rep("not_sig", nrow(windows))
-    sig_windows=paste(windows_domains_all[which(res$padj < pval), 1], 
-                      windows_domains_all[which(res$padj < pval), 2], 
-                      windows_domains_all[which(res$padj < pval), 3], sep = "_")
-    sig_windows_rows=rep("not_sig", nrow(windows))
-    sig_windows_rows[which(paste(windows[,1], windows[,2], windows[,3], sep = "_") %in% sig_windows)] = "sig"
-    plot_df = cbind(norm_counts_avg,sig=c(sig_windows_rows, sig_windows_rows))
-    plot_df_log= plot_df
-    plot_df_log[,2] = log(plot_df_log[,2]+1,10)
-    #left of here
-    
+    sig_rows = rep("not_sig", nrow(windows_domains_all))
+    sig_rows[which(res$padj < pval)] = "sig"
+    plot_df = data.frame(coord=c(rowMeans(windows_domains_all[,2:3]),rowMeans(windows_domains_all[,2:3])),
+                         counts=c(rowMeans(norm_counts[,cols_conditions[condition1_row,1]:cols_conditions[condition1_row,2]]),
+                                  rowMeans(norm_counts[,cols_conditions[condition2_row,1]:cols_conditions[condition2_row,2]])),
+                         conditions=c(rep(conditions[1], nrow(windows_domains_all)), rep(conditions[2], nrow(windows_domains_all))),
+                         sig=c(sig_rows, sig_rows))
     quartz()
-    print(ggplot(plot_df, aes(x=Coord, y=Count, colour=Condition))+
+    print(ggplot(plot_df, aes(x=coord, y=counts, colour=conditions))+
       geom_line()+theme_bw()+
       xlab(paste("Chromosome coordinates (", obj@bait_chr, ")", sep =""))+
       ylab("Normalized counts")+geom_point(data=subset(plot_df,sig=="not_sig"), shape=1, size=0.5)+
       geom_point(data=subset(plot_df,sig=="sig")))
-    quartz()
-    print(ggplot(plot_df_log, aes(x=Coord, y=Count, colour=Condition))+
-      theme_bw()+
-      xlab(paste("Chromosome coordinates (", obj@bait_chr, ")", sep =""))+
-      ylab("Normalized counts(log)")+geom_point(data=subset(plot_df_log,sig=="not_sig"), shape=1, size=0.5)+
-      geom_point(data=subset(plot_df_log,sig=="sig")))
   }
   sig_merge_windows=merge_windows(windows_domains_all[which(res$padj < pval), 1:3])
   print(paste("BED file of significant domains saved in ", obj@output_dir, sep = ""))
