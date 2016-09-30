@@ -50,7 +50,7 @@ differentialAnalysis <- function(obj,norm_counts_avg, windows,conditions, region
                          conditions=c(rep(conditions[1], nrow(windows)), rep(conditions[2], nrow(windows))),
                          sig=c(sig_rows, sig_rows))
     if(!is.null(coordinates)){
-      plot_df=plot_df[which(plot_df[,1] >= coordinates[1], plot_df[,1] <= coordinates[2]),]
+      plot_df=plot_df[which(plot_df[,1] >= coordinates[1] & plot_df[,1] <= coordinates[2]),]
     }
     
     quartz()
