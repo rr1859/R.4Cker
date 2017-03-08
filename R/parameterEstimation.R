@@ -1,4 +1,5 @@
 parameterEstimationCis = function(hmm_input,reps,trstart,respstart, instart,ineqfun){
+  set.seed(7)
   assign("ineqfun", ineqfun, envir = .GlobalEnv)
   print("Parameter estimation.....")
   ntimes <- rep(nrow(hmm_input)/reps,reps)

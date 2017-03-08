@@ -1,4 +1,5 @@
 generateSyntheticSamples <- function(window_counts, num_windows, data, region){
+  set.seed(2)
   n_art_samples <- length(data)
   reps <- length(data)
   chrs <- unique(window_counts[,1])
