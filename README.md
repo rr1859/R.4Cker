@@ -1,6 +1,6 @@
 # R.4Cker
 
-4Cker is a method developed to analyze 4C-Seq (circularized chromosome conformation capture) data. The manuscript has been submitted and a preprint is available on bioarxiv (<a href="http://biorxiv.org/content/early/2015/11/03/030569">4C-ker: A method to reproducibly identify genome-wide interactions captured by 4C-Seq
+4C-ker is a method developed to analyze 4C-Seq (circularized chromosome conformation capture) data. The manuscript can be found here (<a href="http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004780">4C-ker: A method to reproducibly identify genome-wide interactions captured by 4C-Seq
 experiments</a>).
 
 For reviews on 4C-seq refer to the following articles:
