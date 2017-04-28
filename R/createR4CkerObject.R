@@ -98,7 +98,7 @@ createR4CkerObjectFromFiles <- function(files,bait_chr,bait_coord,bait_name,prim
       cat(paste(files[i], "has < than 40% (", perc_reads_cis, "%) reads in cis. Does not pass QC.\n"))
     }
     if(perc_sites_nearbait < 40){
-      cat(paste(files[i], "has < than 40% (", perc_reads_cis, "%) coverage near the bait. Does not pass QC.\n"))
+      cat(paste(files[i], "has < than 40% (", perc_sites_nearbait, "%) coverage near the bait. Does not pass QC.\n"))
     }
   }
   
@@ -186,7 +186,7 @@ createR4CkerObjectFromDFs <- function(dfs,bait_chr,bait_coord,bait_name,primary_
       cat(paste(files[i], "has < than 40% (", perc_reads_cis, "%) reads in cis. Does not pass QC.\n"))
     }
     if(perc_sites_nearbait < 40){
-      cat(paste(files[i], "has < than 40% (", perc_reads_cis, "%) coverage near the bait. Does not pass QC.\n"))
+      cat(paste(files[i], "has < than 40% (", perc_sites_nearbait, "%) coverage near the bait. Does not pass QC.\n"))
     }
   }
   chrs_trans = unique(chrs_trans)
