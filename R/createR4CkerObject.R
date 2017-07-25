@@ -180,13 +180,13 @@ createR4CkerObjectFromDFs <- function(dfs,bait_chr,bait_coord,bait_name,primary_
                             num_reads_trans,perc_reads_trans,
                             num_sites_trans, perc_sites_trans))
     if(total_num_reads < 1e6){
-      cat(paste(files[i], "has < than 1 million reads (", total_num_reads, "). Does not pass QC.\n"))
+      cat(paste(dfs[i], "has < than 1 million reads (", total_num_reads, "). Does not pass QC.\n"))
     }
     if(perc_reads_cis < 40){
-      cat(paste(files[i], "has < than 40% (", perc_reads_cis, "%) reads in cis. Does not pass QC.\n"))
+      cat(paste(dfs[i], "has < than 40% (", perc_reads_cis, "%) reads in cis. Does not pass QC.\n"))
     }
     if(perc_sites_nearbait < 40){
-      cat(paste(files[i], "has < than 40% (", perc_sites_nearbait, "%) coverage near the bait. Does not pass QC.\n"))
+      cat(paste(dfs[i], "has < than 40% (", perc_sites_nearbait, "%) coverage near the bait. Does not pass QC.\n"))
     }
   }
   chrs_trans = unique(chrs_trans)
