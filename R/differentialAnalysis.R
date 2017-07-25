@@ -1,4 +1,7 @@
 differentialAnalysis <- function(obj,norm_counts_avg, windows,conditions, region,coordinates=NULL, pval){
+  if(.Platform$OS.type=="windows"){
+    quartz<-function() windows()
+  }
   pval_options=c(0.01, 0.05,0.1)
   if(length(conditions) != 2)
     stop("Only 2 conditions can be analyzed")
@@ -53,7 +56,7 @@ differentialAnalysis <- function(obj,norm_counts_avg, windows,conditions, region
       plot_df=plot_df[which(plot_df[,1] >= coordinates[1] & plot_df[,1] <= coordinates[2]),]
     }
     
-    #quartz()
+    quartz()
     print(ggplot(plot_df, aes(x=coord, y=counts, colour=conditions))+geom_line()+
       theme_bw()+
       xlab(paste("Chromosome coordinates (", obj@bait_chr, ")", sep =""))+
@@ -66,7 +69,7 @@ differentialAnalysis <- function(obj,norm_counts_avg, windows,conditions, region
                                   rowMeans(norm_counts_log[,cols_conditions[condition2_row,1]:cols_conditions[condition2_row,2]])),
                          conditions=c(rep(conditions[1], nrow(windows)), rep(conditions[2], nrow(windows))),
                          sig=c(sig_rows, sig_rows))
-    #quartz()
+    quartz()
     print(ggplot(plot_df, aes(x=coord, y=counts, colour=conditions))+
       theme_bw()+
       xlab(paste("Chromosome coordinates (", obj@bait_chr, ")", sep =""))+
