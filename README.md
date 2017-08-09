@@ -180,7 +180,7 @@ Differential analysis is done between two conditions on the windows that are int
 Example for nearbait analysis with Tcrb dataset:
 
 ```
-differentialAnalysis(obj=my_obj,
+res_df = differentialAnalysis(obj=my_obj,
 			norm_counts_avg=nb_results$norm_counts_avg,
 			windows=nb_results$window_counts,
 			conditions=c("DN", "ImmB"),
