@@ -82,6 +82,7 @@ differentialAnalysis <- function(obj,norm_counts_avg, windows,conditions, region
     paste(obj@output_dir, obj@bait_name, "_", conditions[1], "_", conditions[2], "_", region, "_pval", pval,"_diff.bed", sep = ""),
     quote=FALSE, col.names=FALSE, row.names=FALSE, sep = "\t")
   op.df <- cbind(windows[,1:3],data.frame(res))
-  op.df
+  op.l <- list(op.df, plot_df)
+  op.l
 }
 
