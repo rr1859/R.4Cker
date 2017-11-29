@@ -107,7 +107,7 @@ buildAdaptiveWindowsCis <- function(data_all,bait_coord, bait_chr,bait_name, out
     }
   }
   #remove - rows
-  neg_rows <- which(window_counts[,1] <=0 | window_counts[,2] <=0 | window_counts[,1] >= max(coord) | window_counts[,2] >= max(cord))
+  neg_rows <- which(window_counts[,1] <=0 | window_counts[,2] <=0 | window_counts[,1] >= max(coord) | window_counts[,2] >= max(coord))
   if(length(neg_rows) != 0)
     window_counts <- window_counts[-neg_rows,]
   window_counts <- window_counts[order(window_counts[,2]),]
