@@ -50,6 +50,7 @@ nearBaitAnalysis <- function(obj, k){
 ####end par est####
 
   ####viterbi####
+  print("Viterbi..")
   j <- 1
   l <- 1
   for(i in 1:length(obj@conditions)){
