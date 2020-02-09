@@ -8,13 +8,17 @@
 
 module load bedtools
 module load kent
-cd folder_for_analysis
-#fragment length
-fl=30
-#primary enzyme for file name
-enzyme=hindiii
-#genome for file name
-genome=mm10
+
+
+while getopts u:p: option 
+do 
+ case "${option}" 
+ in 
+ frag_len) fl=${OPTARG};; 
+ p_enzyme) enzyme=${OPTARG};;
+ genome) genome=${OPTARG};;
+ esac 
+done
 
 #get coordinates for all RE sites in the genome
 oligoMatch ${enzyme}.fa ${genome}.fa ${genome}_${enzyme}_restriction_sites_oligomatch.bed
